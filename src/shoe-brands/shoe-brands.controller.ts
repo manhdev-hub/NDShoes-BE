@@ -1,7 +1,16 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { ShoeBrandsService } from './shoe-brands.service';
 import { CreateShoeBrandDto } from './dto/create-shoe-brand.dto';
 import { UpdateShoeBrandDto } from './dto/update-shoe-brand.dto';
+import { ShoeBrand } from './entities/shoe-brand.entity';
 
 @Controller('shoe-brands')
 export class ShoeBrandsController {
@@ -13,7 +22,7 @@ export class ShoeBrandsController {
   }
 
   @Get()
-  findAll() {
+  findAll(): Promise<ShoeBrand[]> {
     return this.shoeBrandsService.findAll();
   }
 
@@ -23,7 +32,10 @@ export class ShoeBrandsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateShoeBrandDto: UpdateShoeBrandDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateShoeBrandDto: UpdateShoeBrandDto,
+  ) {
     return this.shoeBrandsService.update(+id, updateShoeBrandDto);
   }
 
